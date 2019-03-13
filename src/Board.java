@@ -35,4 +35,9 @@ public class Board {
 		}
 		return false;
 	}
+
+	public int isDoneNumCollisions(){
+		// count all collisions one queen at a time and divide by 2
+		// use isOpen to check each queen
+	}
 }
