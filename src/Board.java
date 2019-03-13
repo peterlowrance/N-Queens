@@ -37,6 +37,16 @@ public class Board {
 	}
 
 	public int isDoneNumCollisions(){
+		int numCollisions = 0;
+		for(int i=0; i<size; i++){
+			for(int j=0; j<size; j++){
+				if(board[i][j]){
+					if(isOpen(i,j)){
+						numCollisions++;
+					}
+				}
+			}
+		}
 		// count all collisions one queen at a time and divide by 2
 		// use isOpen to check each queen
 	}
