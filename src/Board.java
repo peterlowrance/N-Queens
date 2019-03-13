@@ -20,6 +20,10 @@ public class Board {
 		board[x][y] = q;
 	}
 
+/**
+ * Returns true if there are no collisions
+ * @return true if the board satisfies the constraints
+ */
 	public boolean isDone() {
 		for(int i=0; i<size; i++){
 			for(int j=0; j<size; j++){
@@ -35,7 +39,7 @@ public class Board {
 
 /**
  * Returns the number of collisions. Returns 0 if there are no collisions
- * @return      the image at the specified URL
+ * @return the number of collisions
  */
 	public int isDoneNumCollisions(){
 		int numCollisions = 0;
