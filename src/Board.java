@@ -21,33 +21,34 @@ public class Board {
 	}
 
 	public boolean isDone() {
-		// TODO: check conditions
-		boolean rowQ = false;
-		for(int i=0; i<size; i++) {
-			for(int j=0; j<size; j++) {
-				//check the condition along each row
-				if(board[i][j]) {
-					if(rowQ) return false;
-					else rowQ = true;
+		for(int i=0; i<size; i++){
+			for(int j=0; j<size; j++){
+				if(board[i][j]){
+					if(!isOpen(i,j)){
+						return false;
+					}
 				}
 			}
-			rowQ = false;
 		}
-		return false;
+		return true;
 	}
 
+/**
+ * Returns the number of collisions. Returns 0 if there are no collisions
+ * @return      the image at the specified URL
+ */
 	public int isDoneNumCollisions(){
 		int numCollisions = 0;
 		for(int i=0; i<size; i++){
 			for(int j=0; j<size; j++){
 				if(board[i][j]){
-					if(isOpen(i,j)){
+					if(!isOpen(i,j)){
 						numCollisions++;
 					}
 				}
 			}
 		}
+		return numCollisions;
 		// count all collisions one queen at a time and divide by 2
-		// use isOpen to check each queen
 	}
 }
