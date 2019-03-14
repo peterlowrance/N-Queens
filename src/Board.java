@@ -37,6 +37,11 @@ public class Board {
 		return true;
 	}
 
+private boolean isOpen(int i, int j) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
 /**
  * Returns the number of collisions. Returns 0 if there are no collisions
  * @return the number of collisions
