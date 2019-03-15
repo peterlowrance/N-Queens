@@ -13,7 +13,7 @@ public class GeneticAlgorithm {
 	public GeneticAlgorithm(int n, int boardsPerGen){
 		boards = new Board[boardsPerGen];
 		for(Board b: boards) {
-			b = new Board(n);
+			b = new Board(n, true);
 		}
 	}
 	

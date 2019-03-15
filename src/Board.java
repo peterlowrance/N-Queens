@@ -1,16 +1,28 @@
+import java.util.Random;
 
 public class Board {
 	boolean[][] board;
 	int size;
+	Random rand;
 
-	// constructor
-	public Board(int n) {
-		if(n < 4) {
+	/**
+	 * Initializes a board
+	 * @param n size of the board
+	 * @param initializeRandomly place a queen in each column at a random location
+	 */
+	public Board(int n, boolean initializeRandomly) {
+		if (n < 4) {
 			System.err.println("There is no solution to a board of size " + n);
 		}
 		// create a blank board, it is initialized to 0
 		board = new boolean[n][n];
 		size = n;
+		rand = new Random();
+		if (initializeRandomly) {
+			for (int i = 0; i < size; i++) {
+				board[rand.nextInt(size)][i] = true;
+			}
+		}
 	}
 
 	// getter
