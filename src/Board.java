@@ -5,6 +5,9 @@ public class Board {
 
 	// constructor
 	public Board(int n) {
+		if(n < 4) {
+			System.err.println("There is no solution to a board of size " + n);
+		}
 		// create a blank board, it is initialized to 0
 		board = new boolean[n][n];
 		size = n;
