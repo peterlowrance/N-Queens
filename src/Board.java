@@ -5,6 +5,10 @@ public class Board {
 	int size;
 	Random rand;
 
+	public int getFitness() {
+		return isDoneNumCollisions();
+	}
+
 	/**
 	 * Initializes a board
 	 * @param n size of the board
