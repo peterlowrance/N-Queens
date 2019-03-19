@@ -5,8 +5,8 @@ public class Board {
 	int size;
 	Random rand;
 
-	public int getFitness() {
-		return isDoneNumCollisions();
+	public float getFitness() {
+		return (size*size - isDoneNumCollisions())/((float) size*size);
 	}
 
 	/**
