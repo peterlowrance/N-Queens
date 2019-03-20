@@ -9,7 +9,7 @@ public class GeneticAlgorithm {
 
 	public static void main(String[] args) {
 		rand = new Random();
-		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(5, 4);
+		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(5, 6);
 		thisAlgorithm.solve();
 	}
 
@@ -38,9 +38,9 @@ public class GeneticAlgorithm {
 	}
 	
 	public void calculateFitness(){
-		for(Board b: boards){
-			b.calculateFitness();
-			System.out.println(b.fitness);
+		for(int i=0; i<boardsPerGen; i++) {
+			boards[i].calculateFitness();
+			System.out.println(boards[i].fitness);
 		}
 	}
 	
@@ -49,7 +49,11 @@ public class GeneticAlgorithm {
 		for(int i=0; i<boardsPerGen; i+=2){
 			for(int j=0; j<splicePoint; j++){
 				swapCol(i, i+1, j);
-			}			
+			}
+			//boards[i].calculateFitness();
+			//boards[i+1].calculateFitness();
+			//System.out.println(boards[i].fitness);
+			//System.out.println(boards[i+1].fitness);
 		}
 		
 	}
