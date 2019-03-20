@@ -48,19 +48,19 @@ public class GeneticAlgorithm {
 		int splicePoint = rand.nextInt(n);
 		for(int i=0; i<boardsPerGen; i+=2){
 			for(int j=0; j<splicePoint; j++){
-				swapCol(boards[i], boards[i+1], j);
+				swapCol(i, i+1, j);
 			}			
 		}
 		
 	}
 	
-	public void swapCol(Board a, Board b, int col) {
+	public void swapCol(int index1, int index2, int col) {
 		//go through rows
 		for(int i=0; i<n; i++) {
 			//swap elements in this row
-			boolean temp = a.get(i, col);
-			a.set(i, col, b.get(i, col));
-			b.set(i, col, temp);
+			boolean temp = boards[index1].get(i, col);
+			boards[index1].set(i, col, boards[index2].get(i, col));
+			boards[index2].set(i, col, temp);
 		}
 	}
 
