@@ -3,52 +3,69 @@ import java.util.Random;
 public class GeneticAlgorithm {
 
 	private int boardsPerGen;
-	private int n;
+	private int n; //size of the boards
 	private float mutateChance;
 	private Board[] boards;
 	static Random rand;
 
 	public static void main(String[] args) {
 		rand = new Random();
-		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(5, 6, .5f);
-		thisAlgorithm.solve();
+		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(4, 6, .5f);
+		System.out.println("Solution: " + thisAlgorithm.solve().fitness);
 	}
 
+	//constructor that creates random boards
 	public GeneticAlgorithm(int n, int boardsPerGen, float mutateChance) {
+		//if number of boards is odd, throw an error
 		if (boardsPerGen % 2 == 1) {
-			System.err.println("Please use an even number of boards.");
+			throw new java.lang.UnsupportedOperationException("Please use an even number of boards.");
 		}
 		this.boardsPerGen = boardsPerGen;
 		this.n = n;
 		this.mutateChance = mutateChance;
 		boards = new Board[boardsPerGen];
+		//initialize all boards
 		for (int i = 0; i < boardsPerGen; i++) {
 			boards[i] = new Board(n, true);
 		}
 	}
 
-	public void solve() {
-		// calculate all the boards fitnesses
-		calculateFitness();
-		// select the fittest half of the boards
-		selection();
-		for (Board b : boards) {
-			System.out.println("s" + b.fitness);
+	//use a genetic algorithm to find a solution to the n-queens problem
+	public Board solve() {
+		//loop until a solution is found
+		while (true) {
+			// calculate all the boards fitnesses
+			calculateFitness();
+			//if a fitness is 1, then that is a solution
+			for (Board b : boards) {
+				if(b.fitness == 1) {
+					return b;
+				}
+				System.out.println("s" + b.fitness);
+			}
+			//select the fittest half of the boards
+			selection();
+			//breed two parents into two children boards
+			crossover();
+			calculateFitness(); //remove
+			//mutate the boards with a random chance
+			if (rand.nextFloat() > mutateChance) {
+				mutate();
+				System.out.println("mutate");
+			}
+			calculateFitness(); //remove
 		}
-		crossover();
-		calculateFitness();
-		if (rand.nextFloat() > mutateChance) {
-			mutate();
-			System.out.println("mutate");
-		}
-		calculateFitness();
 	}
 
+	//change a column of each board at random
 	public void mutate() {
+		//go through all the boards
 		for (int i = 0; i < boardsPerGen; i++) {
-			int mutateCol = rand.nextInt(n);
+			int mutateCol = rand.nextInt(n); //column to mutate
+			int mutateRow = rand.nextInt(n); //row to mutate
+			//change all the places in that column, setting one to the mutated place
 			for (int row = 0; row < n; row++) {
-				if (row == mutateCol) {
+				if (row == mutateRow) {
 					boards[i].set(row, mutateCol, true);
 				} else {
 					boards[i].set(row, mutateCol, false);
@@ -57,27 +74,29 @@ public class GeneticAlgorithm {
 		}
 	}
 
+	//calculate how fit a board is based on how many collisions there are
 	public void calculateFitness() {
 		for (int i = 0; i < boardsPerGen; i++) {
 			boards[i].calculateFitness();
-			System.out.println(boards[i].fitness);
+			System.out.println(boards[i].fitness); //remove
 		}
 	}
 
+	//swap half of the board the next board
 	public void crossover() {
-		int splicePoint = rand.nextInt(n);
+		int splicePoint = rand.nextInt(n); //choose a random point to splice
+		//go through each board, 2 at a time
 		for (int i = 0; i < boardsPerGen; i += 2) {
+			//go through the columns of this board
 			for (int j = 0; j < splicePoint; j++) {
+				//swap all the columns with the next board
 				swapCol(i, i + 1, j);
 			}
-			// boards[i].calculateFitness();
-			// boards[i+1].calculateFitness();
-			// System.out.println(boards[i].fitness);
-			// System.out.println(boards[i+1].fitness);
 		}
 
 	}
 
+	//swap the given column of the board at index1 with index2 
 	public void swapCol(int index1, int index2, int col) {
 		// go through rows
 		for (int i = 0; i < n; i++) {
@@ -88,6 +107,7 @@ public class GeneticAlgorithm {
 		}
 	}
 
+	//
 	public void selection() {
 		// sort the first half by fitness
 		bubbleSort(boards, boardsPerGen / 2);
