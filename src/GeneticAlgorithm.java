@@ -9,8 +9,8 @@ public class GeneticAlgorithm {
 
 	public static void main(String[] args) {
 		rand = new Random();
-		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(4, 4);
-		thisAlgorithm.solution();
+		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(5, 4);
+		thisAlgorithm.solve();
 	}
 
 	public GeneticAlgorithm(int n, int boardsPerGen) {
@@ -22,78 +22,64 @@ public class GeneticAlgorithm {
 		boards = new Board[boardsPerGen];
 		for (int i=0; i<boardsPerGen; i++) {
 			boards[i] = new Board(n, true);
-			System.out.println(boards[i].getFitness());
 		}
 	}
 
-	public Board solution() {
-		Board[] bHalf = bestHalf(boards);
-		for(Board b: bHalf) {
-			System.out.println(":" + b.getFitness());
+	public void solve() {
+		//calculate all the boards fitnesses
+		calculateFitness();
+		//select the fittest half of the boards
+		selection();
+		for(Board b: boards) {
+			System.out.println("s" + b.fitness);
 		}
-		return null;
+		crossover();
+		calculateFitness();
 	}
 	
-	public Board[] spliceDoulbe(Board[] boards) {
-		Board[] splicedBoards = new Board[boardsPerGen];
-		for(int i=0; i< boards.length; i+= 2) {
-			int splicePoint = rand.nextInt(n);
-			Board newBoard1 = new Board(n, false);
-			for(int j=0; i<n; j++) {
-				if(j < splicePoint) {
-					setCol(newBoard1, boards[i], j);
-				}
-				else {
-					setCol(newBoard1, boards[i+1], j);
-				}
-			}
-			splicedBoards[i] = newBoard1;
-			Board newBoard2 = new Board(n, false);
-			for(int j=0; i<n; j++) {
-				if(j < splicePoint) {
-					setCol(newBoard2, boards[i+1], j);
-				}
-				else {
-					setCol(newBoard2, boards[i], j);
-				}
-			}
-			splicedBoards[i+1] = newBoard2;
+	public void calculateFitness(){
+		for(Board b: boards){
+			b.calculateFitness();
+			System.out.println(b.fitness);
 		}
-		return splicedBoards;
 	}
 	
-	public void setCol(Board getCol, Board setCol, int col) {
+	public void crossover() {
+		int splicePoint = rand.nextInt(n);
+		for(int i=0; i<boardsPerGen; i+=2){
+			for(int j=0; j<splicePoint; j++){
+				swapCol(boards[i], boards[i+1], j);
+			}			
+		}
+		
+	}
+	
+	public void swapCol(Board a, Board b, int col) {
+		//go through rows
 		for(int i=0; i<n; i++) {
-			setCol.set(i, col, getCol.get(i, col));
+			//swap elements in this row
+			boolean temp = a.get(i, col);
+			a.set(i, col, b.get(i, col));
+			b.set(i, col, temp);
 		}
 	}
 
-	public Board[] bestHalf(Board[] boards) {
-		float[] fitnesses = new float[boardsPerGen];
-		for (int i = 0; i < boardsPerGen; i++) {
-			fitnesses[i] = boards[i].getFitness();
+	public void selection() {
+		//sort the first half by fitness
+		bubbleSort(boards, boardsPerGen/2);
+		//duplicate the boards so there are 
+		for(int i=0; i< boardsPerGen/2; i++){
+			boards[i] = boards[boardsPerGen/2 + i];
 		}
-		bubbleSort(fitnesses, boardsPerGen/2);
-
-		Board[] bestHalf = new Board[boardsPerGen/2];
-		for (int i = 0; i < boardsPerGen/2; i++) {
-			for(Board b: boards) {
-				if(Math.abs(b.getFitness() - fitnesses[fitnesses.length - i - 1]) < 0.0001) {
-					bestHalf[i] = b;
-					break;
-				}
-			}
-		}
-		return bestHalf;
 	}
 
-	public static void bubbleSort(float arr[], int k) {
+	public static void bubbleSort(Board[] arr, int k) {
 		int n = arr.length;
 		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < n - i - 1; j++) {
-				if (arr[j] > arr[j + 1]) {
+				if (arr[j].fitness > arr[j + 1].fitness) {
 					// swap arr[j+1] and arr[i]
-					float temp = arr[j];
+					Board temp = arr[j];
 					arr[j] = arr[j + 1];
 					arr[j + 1] = temp;
 				}

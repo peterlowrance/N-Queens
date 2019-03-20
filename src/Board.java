@@ -4,9 +4,10 @@ public class Board {
 	boolean[][] board;
 	int size;
 	Random rand;
+	public float fitness;
 
-	public float getFitness() {
-		return (size*size - isDoneNumCollisions())/((float) size*size);
+	public void calculateFitness() {
+		fitness = (size*size - isDoneNumCollisions())/((float) size*size);
 	}
 
 	/**
