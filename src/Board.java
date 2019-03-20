@@ -4,9 +4,10 @@ public class Board {
 	boolean[][] board;
 	int size;
 	Random rand;
+	public float fitness;
 
-	public float getFitness() {
-		return (size*size - isDoneNumCollisions())/((float) size*size);
+	public void calculateFitness() {
+		fitness = (size*size - isDoneNumCollisions())/((float) size*size);
 	}
 
 	/**
@@ -96,5 +97,43 @@ public class Board {
 		}
 		return numCollisions;
 		// count all collisions one queen at a time and divide by 2
+	}
+	
+	
+	public String toString(){
+		int numSpacesAcross = this.size*2+3;
+		boolean thisSpace;
+		String returnStr = "";
+		
+		for(int i = 0; i <= numSpacesAcross; i++){
+			for(int j = 0; j < (this.size + 2); j++){
+				if(i == 0 || i == (this.size + 1)){
+					if(j == 0 || j == numSpacesAcross - 1){
+						returnStr += '+';
+					}else{
+						returnStr += '-';
+					}
+				}else if(j == numSpacesAcross){
+					returnStr += '\n';
+				}else{
+					if(j == 0 || j == numSpacesAcross - 1){
+						returnStr += '|';
+					}else{
+						if(j % 2 == 0){
+							returnStr += ' '; 
+						}else{
+							thisSpace = this.get(i - 1, (j - 1)/2);
+							if(thisSpace){
+								returnStr += '1';
+							}else{
+								returnStr += '0';
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return returnStr;
 	}
 }
