@@ -45,7 +45,7 @@ public class BoardTest {
 	}
 	@Test 
 	public void checkIsDoneTrue() {
-		Board board = new Board(3, false);
+		Board board = new Board(5, false);
 		board.set(0,0,true);
 		Assert.assertTrue(board.isDone());
 	}
