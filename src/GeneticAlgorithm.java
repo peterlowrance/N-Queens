@@ -28,33 +28,34 @@ public class GeneticAlgorithm {
 
 	public Board solution() {
 		Board[] bHalf = bestHalf(boards);
-		for(Board b: bHalf) {
+		Board[] boards = spliceDoulbe(bHalf);
+		for(Board b: boards) {
 			System.out.println(":" + b.getFitness());
 		}
 		return null;
 	}
 	
-	public Board[] spliceDoulbe(Board[] boards) {
+	public Board[] spliceDoulbe(Board[] bHalf) {
 		Board[] splicedBoards = new Board[boardsPerGen];
-		for(int i=0; i< boards.length; i+= 2) {
+		for(int i=0; i< bHalf.length; i+= 2) {
 			int splicePoint = rand.nextInt(n);
 			Board newBoard1 = new Board(n, false);
 			for(int j=0; i<n; j++) {
 				if(j < splicePoint) {
-					setCol(newBoard1, boards[i], j);
+					setCol(newBoard1, bHalf[i], j);
 				}
 				else {
-					setCol(newBoard1, boards[i+1], j);
+					setCol(newBoard1, bHalf[i+1], j);
 				}
 			}
 			splicedBoards[i] = newBoard1;
 			Board newBoard2 = new Board(n, false);
 			for(int j=0; i<n; j++) {
 				if(j < splicePoint) {
-					setCol(newBoard2, boards[i+1], j);
+					setCol(newBoard2, bHalf[i+1], j);
 				}
 				else {
-					setCol(newBoard2, boards[i], j);
+					setCol(newBoard2, bHalf[i], j);
 				}
 			}
 			splicedBoards[i+1] = newBoard2;
