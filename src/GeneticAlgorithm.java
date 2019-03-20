@@ -25,12 +25,6 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	public Board solution() {
-		Board[] bHalf = bestHalf(boards);
-		Board[] boards = spliceDoulbe(bHalf);
-		for(Board b: boards) {
-			System.out.println(":" + b.getFitness());
-
 	public void solve() {
 		//calculate all the boards fitnesses
 		calculateFitness();
@@ -43,30 +37,6 @@ public class GeneticAlgorithm {
 		calculateFitness();
 	}
 	
-	public Board[] spliceDoulbe(Board[] bHalf) {
-		Board[] splicedBoards = new Board[boardsPerGen];
-		for(int i=0; i< bHalf.length; i+= 2) {
-			int splicePoint = rand.nextInt(n);
-			Board newBoard1 = new Board(n, false);
-			for(int j=0; i<n; j++) {
-				if(j < splicePoint) {
-					setCol(newBoard1, bHalf[i], j);
-				}
-				else {
-					setCol(newBoard1, bHalf[i+1], j);
-				}
-			}
-			splicedBoards[i] = newBoard1;
-			Board newBoard2 = new Board(n, false);
-			for(int j=0; i<n; j++) {
-				if(j < splicePoint) {
-					setCol(newBoard2, bHalf[i+1], j);
-				}
-				else {
-					setCol(newBoard2, bHalf[i], j);
-				}
-			}
-			splicedBoards[i+1] = newBoard2;
 	public void calculateFitness(){
 		for(Board b: boards){
 			b.calculateFitness();
