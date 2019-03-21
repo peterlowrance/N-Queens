@@ -13,8 +13,7 @@ public class GeneticAlgorithm {
 
 		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(4, 6, .5f);
 		System.out.println("Genetic Algorithm:");
-		System.out.println("Solution: " + thisAlgorithm.solve().fitness);
-		System.out.println(thisAlgorithm.boards[0]);
+		System.out.println("Solution: \n" + thisAlgorithm.solve());
 		
 		Board brd = new Board(10, false);		
 		
