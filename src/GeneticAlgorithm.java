@@ -107,16 +107,18 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	//
+	//selects the best half of the boards and duplicates it to the second half
 	public void selection() {
 		// sort the first half by fitness
 		bubbleSort(boards, boardsPerGen / 2);
-		// duplicate the boards so there are
+		// duplicate the boards to the second half
 		for (int i = 0; i < boardsPerGen / 2; i++) {
 			boards[i] = boards[boardsPerGen / 2 + i];
 		}
 	}
 
+	//Bubble sort for boards
+	//This only runs bubble sort k times, effectively finding the k largest boards
 	public static void bubbleSort(Board[] arr, int k) {
 		int n = arr.length;
 		for (int i = 0; i < k; i++) {
