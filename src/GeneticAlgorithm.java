@@ -42,12 +42,10 @@ public class GeneticAlgorithm {
 			selection();
 			//breed two parents into two children boards
 			crossover();
-			calculateFitness(); //remove
 			//mutate the boards with a random chance
 			if (rand.nextFloat() > mutateChance) {
 				mutate();
 			}
-			calculateFitness(); //remove
 		}
 	}
 
