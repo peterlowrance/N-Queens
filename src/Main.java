@@ -5,9 +5,13 @@ public class Main {
 	static long startTime;
 
 	public static void main(String[] args) {
+		GeneticCalculations();
 		in = new Scanner(System.in);
 		System.out.print("n-Queens algorithms. By Peter Lowrance and Nathaniel Sprecher.\nEnter 1 for genetic algorithm, 2 for backtracking algorithm, or 3 for both: ");
 		int input = in.nextInt();
+		if(input != 1 && input != 2 && input != 3) {
+			System.err.println("Invalid input");
+		}
 		System.out.print("Enter the size for n: ");
 		int n = in.nextInt();
 		if(input == 1 || input == 3) {
@@ -49,4 +53,23 @@ public class Main {
 		System.out.println("Found in " + (System.currentTimeMillis() - startTime)/1000.0 + " seconds.");
 	}
 
+	public static void GeneticCalculations() {
+		for(int i=2; i<=10; i+= 2) {
+			for(float j=.1f; j<=1; j+= .1f) {
+				//start timer
+				startTime = System.currentTimeMillis();
+				//run the algorithm 4 times
+				GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(10, i, j);
+				thisAlgorithm.solve();
+				thisAlgorithm = new GeneticAlgorithm(10, i, j);
+				thisAlgorithm.solve();
+				thisAlgorithm = new GeneticAlgorithm(10, i, j);
+				thisAlgorithm.solve();
+				thisAlgorithm = new GeneticAlgorithm(10, i, j);
+				thisAlgorithm.solve();
+				//average 4 runs
+				System.out.println(i + ":"+j+" Found in " + (System.currentTimeMillis() - startTime)/4000f + " seconds.");
+			}
+		}
+	}
 }
