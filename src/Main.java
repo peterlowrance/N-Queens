@@ -19,9 +19,9 @@ public class Main {
 	}
 	
 	public static void RunGen(int n) {
-		System.out.print("Enter an even number for the number of boards per generation: ");
+		System.out.print("(Genetic) Enter an even number for the number of boards per generation: ");
 		int boardsPerGen = in.nextInt();
-		System.out.print("Enter the chance for a mutation to occur (.5 for 50% chance): ");
+		System.out.print("(Genetic) Enter the chance for a mutation to occur (.5 for 50% chance): ");
 		float mutationChance = in.nextFloat();
 		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(n, boardsPerGen, mutationChance);
 		System.out.println("\nGenetic Algorithm:");
