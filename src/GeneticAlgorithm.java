@@ -8,28 +8,10 @@ public class GeneticAlgorithm {
 	private Board[] boards;
 	static Random rand;
 
-	public static void main(String[] args) {
-		rand = new Random();
-
-		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(4, 6, .5f);
-		System.out.println("Genetic Algorithm:");
-		System.out.println("Solution: \n" + thisAlgorithm.solve());
-		
-		Board brd = new Board(10, false);		
-		
-		BacktrackingAlgorithm bta = new BacktrackingAlgorithm();
-		bta.backtracking(brd, 0);
-		System.out.println("\nBacktracking Algorithm:");
-		if(brd.isDone()){
-			System.out.println("No collisions in solution.");
-		}else{
-			System.out.println("There was a collision.");
-		}
-		System.out.println(brd.toString());
-	}
 
 	//constructor that creates random boards
 	public GeneticAlgorithm(int n, int boardsPerGen, float mutateChance) {
+		rand = new Random();
 		//if number of boards is odd, throw an error
 		if (boardsPerGen % 2 == 1) {
 			throw new java.lang.UnsupportedOperationException("Please use an even number of boards.");
