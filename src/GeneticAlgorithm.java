@@ -12,14 +12,21 @@ public class GeneticAlgorithm {
 		rand = new Random();
 
 		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(4, 6, .5f);
+		System.out.println("Genetic Algorithm:");
 		System.out.println("Solution: " + thisAlgorithm.solve().fitness);
+		System.out.println(thisAlgorithm.boards[0]);
 		
 		Board brd = new Board(10, false);		
 		
 		BacktrackingAlgorithm bta = new BacktrackingAlgorithm();
 		bta.backtracking(brd, 0);
+		System.out.println("\nBacktracking Algorithm:");
+		if(brd.isDone()){
+			System.out.println("No collisions in solution.");
+		}else{
+			System.out.println("There was a collision.");
+		}
 		System.out.println(brd.toString());
-
 	}
 
 	//constructor that creates random boards
@@ -49,7 +56,6 @@ public class GeneticAlgorithm {
 				if(b.fitness == 1) {
 					return b;
 				}
-				System.out.println("s" + b.fitness);
 			}
 			//select the fittest half of the boards
 			selection();
@@ -59,7 +65,6 @@ public class GeneticAlgorithm {
 			//mutate the boards with a random chance
 			if (rand.nextFloat() > mutateChance) {
 				mutate();
-				System.out.println("mutate");
 			}
 			calculateFitness(); //remove
 		}
@@ -86,7 +91,6 @@ public class GeneticAlgorithm {
 	public void calculateFitness() {
 		for (int i = 0; i < boardsPerGen; i++) {
 			boards[i].calculateFitness();
-			System.out.println(boards[i].fitness); //remove
 		}
 	}
 
