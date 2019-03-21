@@ -11,6 +11,12 @@ public class GeneticAlgorithm {
 		rand = new Random();
 		GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(5, 4);
 		thisAlgorithm.solve();
+		
+		Board brd = new Board(30, false);		
+		
+		BacktrackingAlgorithm bta = new BacktrackingAlgorithm();
+		bta.backtracking(brd, 0);
+		System.out.println(brd.toString());
 	}
 
 	public GeneticAlgorithm(int n, int boardsPerGen) {

@@ -31,8 +31,8 @@ public class Board {
 	}
 
 	// getter
-	public boolean get(int x, int y) {
-		return board[x][y];
+	public boolean get(int row, int col) {
+		return board[row][col];
 	}
 
 	// setter
@@ -70,10 +70,33 @@ public class Board {
 			}
 		}
 		// TODO check diagonals
-		/*
-		 * for(int k=0; i<size; i++) { if(board[k-i][k-j] && k != j && k != i) { return
-		 * false; } }
-		 */
+		for(int k = 1; k < this.size; k++){
+			//check diagonals in four directions
+			//SE
+			if(i + k < this.size && j + k < this.size){
+				if(this.get(i + k, j + k)){
+					return false;
+				}
+			}
+			//NE
+			if(i - k >= 0 && j + k < this.size){
+				if(this.get(i - k, j + k)){
+					return false;
+				}
+			}
+			//NW
+			if(i - k >= 0 && j - k >= 0){
+				if(this.get(i - k, j - k)){
+					return false;
+				}
+			}
+			//SW
+			if(i + k < this.size && j - k >= 0){
+				if(this.get(i + k, j - k)){
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
@@ -105,24 +128,26 @@ public class Board {
 		boolean thisSpace;
 		String returnStr = "";
 		
-		for(int i = 0; i <= numSpacesAcross; i++){
-			for(int j = 0; j < (this.size + 2); j++){
-				if(i == 0 || i == (this.size + 1)){
-					if(j == 0 || j == numSpacesAcross - 1){
+		for(int row = 1; row <= (this.size + 2); row++){
+			for(int col = 1; col <= numSpacesAcross + 1; col++){
+				if(row == 1 || row == (this.size + 2)){
+					if(col == 1 || col == numSpacesAcross){
 						returnStr += '+';
+					}else if(col == numSpacesAcross + 1){
+						returnStr += '\n';
 					}else{
 						returnStr += '-';
 					}
-				}else if(j == numSpacesAcross){
+				}else if(col == numSpacesAcross + 1){
 					returnStr += '\n';
 				}else{
-					if(j == 0 || j == numSpacesAcross - 1){
+					if(col == 1 || col == numSpacesAcross){
 						returnStr += '|';
 					}else{
-						if(j % 2 == 0){
+						if(col % 2 == 0){
 							returnStr += ' '; 
 						}else{
-							thisSpace = this.get(i - 1, (j - 1)/2);
+							thisSpace = this.get(row - 2, (col - 1)/2 - 1);
 							if(thisSpace){
 								returnStr += '1';
 							}else{
