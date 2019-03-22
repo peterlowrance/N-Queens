@@ -3,16 +3,15 @@ import java.util.Random;
 public class GeneticAlgorithm {
 
 	private int boardsPerGen;
-	private int n; //size of the boards
+	private int n; // size of the boards
 	private float mutateChance;
 	private Board[] boards;
 	static Random rand;
 
-
-	//constructor that creates random boards
+	// constructor that creates random boards
 	public GeneticAlgorithm(int n, int boardsPerGen, float mutateChance) {
 		rand = new Random();
-		//if number of boards is odd, throw an error
+		// if number of boards is odd, throw an error
 		if (boardsPerGen % 2 == 1) {
 			throw new java.lang.UnsupportedOperationException("Please use an even number of boards.");
 		}
@@ -20,74 +19,77 @@ public class GeneticAlgorithm {
 		this.n = n;
 		this.mutateChance = mutateChance;
 		boards = new Board[boardsPerGen];
-		//initialize all boards
+		// initialize all boards
 		for (int i = 0; i < boardsPerGen; i++) {
 			boards[i] = new Board(n, true);
 		}
 	}
 
-	//use a genetic algorithm to find a solution to the n-queens problem
+	// use a genetic algorithm to find a solution to the n-queens problem
 	public Board solve() {
-		//loop until a solution is found
+		// loop until a solution is found
 		while (true) {
 			// calculate all the boards fitnesses
 			calculateFitness();
-			//if a fitness is 1, then that is a solution
+			// if a fitness is 1, then that is a solution
 			for (Board b : boards) {
-				if(b.fitness == 1) {
+				if (b.fitness == 1) {
 					return b;
 				}
 			}
-			//select the fittest half of the boards
+			// select the fittest half of the boards
 			selection();
-			//breed two parents into two children boards
+			// breed two parents into two children boards
 			crossover();
-			//mutate the boards with a random chance
-			if (rand.nextFloat() > mutateChance) {
+			// mutate the boards with a random chance
+			if (rand.nextFloat() < mutateChance) {
 				mutate();
 			}
 		}
 	}
 
-	//change a column of each board at random
+	// change a column of each board at random
 	public void mutate() {
-		//go through all the boards
+		// go through all the boards
 		for (int i = 0; i < boardsPerGen; i++) {
-			int mutateCol = rand.nextInt(n); //column to mutate
-			int mutateRow = rand.nextInt(n); //row to mutate
-			//change all the places in that column, setting one to the mutated place
-			for (int row = 0; row < n; row++) {
-				if (row == mutateRow) {
-					boards[i].set(row, mutateCol, true);
-				} else {
-					boards[i].set(row, mutateCol, false);
+			if (rand.nextFloat() < mutateChance) {
+				int mutateCol = rand.nextInt(n); // column to mutate
+				int mutateRow = rand.nextInt(n); // row to mutate
+				// change all the places in that column, setting one to the
+				// mutated place
+				for (int row = 0; row < n; row++) {
+					if (row == mutateRow) {
+						boards[i].set(row, mutateCol, true);
+					} else {
+						boards[i].set(row, mutateCol, false);
+					}
 				}
 			}
 		}
 	}
 
-	//calculate how fit a board is based on how many collisions there are
+	// calculate how fit a board is based on how many collisions there are
 	public void calculateFitness() {
 		for (int i = 0; i < boardsPerGen; i++) {
 			boards[i].calculateFitness();
 		}
 	}
 
-	//swap half of the board the next board
+	// swap half of the board the next board
 	public void crossover() {
-		int splicePoint = rand.nextInt(n); //choose a random point to splice
-		//go through each board, 2 at a time
+		int splicePoint = rand.nextInt(n); // choose a random point to splice
+		// go through each board, 2 at a time
 		for (int i = 0; i < boardsPerGen; i += 2) {
-			//go through the columns of this board
+			// go through the columns of this board
 			for (int j = 0; j < splicePoint; j++) {
-				//swap all the columns with the next board
+				// swap all the columns with the next board
 				swapCol(i, i + 1, j);
 			}
 		}
 
 	}
 
-	//swap the given column of the board at index1 with index2 
+	// swap the given column of the board at index1 with index2
 	public void swapCol(int index1, int index2, int col) {
 		// go through rows
 		for (int i = 0; i < n; i++) {
@@ -98,7 +100,7 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	//selects the best half of the boards and duplicates it to the second half
+	// selects the best half of the boards and duplicates it to the second half
 	public void selection() {
 		// sort the first half by fitness
 		bubbleSort(boards, boardsPerGen / 2);
@@ -108,8 +110,9 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	//Bubble sort for boards
-	//This only runs bubble sort k times, effectively finding the k largest boards
+	// Bubble sort for boards
+	// This only runs bubble sort k times, effectively finding the k largest
+	// boards
 	public static void bubbleSort(Board[] arr, int k) {
 		int n = arr.length;
 		for (int i = 0; i < k; i++) {

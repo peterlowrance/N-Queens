@@ -54,21 +54,19 @@ public class Main {
 	}
 
 	public static void GeneticCalculations() {
-		for(int i=2; i<=10; i+= 2) {
-			for(float j=.1f; j<=1; j+= .1f) {
+		for(int i=2; i<=8; i+= 2) {
+			for(float j=.2f; j<=1.01; j+= .1f) {
 				//start timer
 				startTime = System.currentTimeMillis();
-				//run the algorithm 4 times
-				GeneticAlgorithm thisAlgorithm = new GeneticAlgorithm(10, i, j);
-				thisAlgorithm.solve();
-				thisAlgorithm = new GeneticAlgorithm(10, i, j);
-				thisAlgorithm.solve();
-				thisAlgorithm = new GeneticAlgorithm(10, i, j);
-				thisAlgorithm.solve();
-				thisAlgorithm = new GeneticAlgorithm(10, i, j);
-				thisAlgorithm.solve();
-				//average 4 runs
-				System.out.println(i + ":"+j+" Found in " + (System.currentTimeMillis() - startTime)/4000f + " seconds.");
+				//run the algorithm n times
+				int n = 10;
+				GeneticAlgorithm thisAlgorithm;
+				for(int k=0; k<n; k++){
+					thisAlgorithm = new GeneticAlgorithm(8, i, j);
+					thisAlgorithm.solve();
+				}
+				//average n runs
+				System.out.println((System.currentTimeMillis() - startTime)/(n*1000f));
 			}
 		}
 	}
