@@ -149,9 +149,9 @@ public class Board {
 						}else{
 							thisSpace = this.get(row - 2, (col - 1)/2 - 1);
 							if(thisSpace){
-								returnStr += '1';
+								returnStr += 'Q';
 							}else{
-								returnStr += '0';
+								returnStr += '*';
 							}
 						}
 					}
