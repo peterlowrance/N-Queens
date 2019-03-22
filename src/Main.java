@@ -54,12 +54,12 @@ public class Main {
 	}
 
 	public static void GeneticCalculations() {
-		for(int i=2; i<=8; i+= 2) {
-			for(float j=.2f; j<=1.01; j+= .1f) {
+		for(int i=2; i<=2; i+= 2) {
+			for(float j=.9f; j<=1.01; j+= .1f) {
 				//start timer
 				startTime = System.currentTimeMillis();
 				//run the algorithm n times
-				int n = 10;
+				int n = 50;
 				GeneticAlgorithm thisAlgorithm;
 				for(int k=0; k<n; k++){
 					thisAlgorithm = new GeneticAlgorithm(8, i, j);
