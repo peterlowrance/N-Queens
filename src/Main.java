@@ -5,7 +5,7 @@ public class Main {
 	static long startTime;
 
 	public static void main(String[] args) {
-		GeneticCalculations();
+		//GeneticCalculations();
 		in = new Scanner(System.in);
 		System.out.print("n-Queens algorithms. By Peter Lowrance and Nathaniel Sprecher.\nEnter 1 for genetic algorithm, 2 for backtracking algorithm, or 3 for both: ");
 		int input = in.nextInt();
